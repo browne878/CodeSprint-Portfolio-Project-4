@@ -12,7 +12,7 @@ class Company(models.Model):
     created_at = models.DateField(auto_now_add=True, null=True)
 
 
-class Emplyee(models.Model):
+class Employee(models.Model):
 
     class Role(models.TextChoices):
         CLIENT = 'client', _('CLIENT')

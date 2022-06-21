@@ -1,0 +1,31 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    overflow: auto;
+}
+
+.content {
+    height: 81vh
+}
+
+.vertical-center {
+    min-height: 100%;
+    min-height: 75vh;
+
+    display: flex;
+    align-items: center;
+}
+
+/* Login Page */
+
+.register-link,
+p {
+    padding-top: 20px;
+}
+
+/* Register Page */
+
+.login-link,
+p {
+    padding-top: 20px;
+}
