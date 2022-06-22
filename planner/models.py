@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import AbstractUser
 
 
 class Company(models.Model):
@@ -12,26 +13,24 @@ class Company(models.Model):
     created_at = models.DateField(auto_now_add=True, null=True)
 
 
-class Employee(models.Model):
+class User(AbstractUser):
 
     class Role(models.TextChoices):
         CLIENT = 'client', _('CLIENT')
         DEVELOPER = 'developer', _('DEVELOPER')
         ADMIN = 'admin', _('ADMIN')
 
-    emplyee_id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=255)
-    role = models.CharField(
-        max_length=9,
-        choices=Role.choices,
-        default=Role.CLIENT)
-    company_id = models.ForeignKey(Company, on_delete=models.DO_NOTHING)
+    # emplyee_id = models.UUIDField(
+    #     primary_key=True,
+    #     default=uuid.uuid4,
+    #     editable=False)
+    # first_name = models.CharField(max_length=255)
+    # last_name = models.CharField(max_length=255)
+    # role = models.CharField(
+    #     max_length=9,
+    #     choices=Role.choices,
+    #     default=Role.CLIENT)
+    # company_id = models.ForeignKey(Company, on_delete=models.DO_NOTHING)
 
 
 class Project(models.Model):

@@ -16,6 +16,10 @@
     align-items: center;
 }
 
+.bg-dark-gray {
+    background-color: #495057;
+}
+
 /* Login Page */
 
 .register-link,
@@ -28,4 +32,10 @@ p {
 .login-link,
 p {
     padding-top: 20px;
+}
+
+/* Project Page */
+
+.accordion-button:not(.collapsed) {
+    background-color: #6c757d;
 }

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<h1>{% trans "Sign Up" %}</h1>
+
+<p>lol</p>
+
+<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <button type="submit">{% trans "Sign Up" %} &raquo;</button>
+</form>
+
+<div id="register" class="container">
+  <div id="register-row" class="row vertical-center">
+      <div id="register-box" class="col-md-12">
+          <form id="register-form" class="form" action="" method="post">
+              <h3 class="text-center text-light">Register</h3>
+              <div class="form-group">
+                  <label for="fname" class="text-light">First Name:</label><br>
+                  <input type="text" name="fname" id="fname" class="form-control" placeholder="Joe">
+              </div>
+              <div class="form-group">
+                  <label for="lname" class="text-light">Last Name:</label><br>
+                  <input type="text" name="lname" id="lname" class="form-control" placeholder="Blogs">
+              </div>
+              <div class="form-group">
+                  <label for="email" class="text-light">Email:</label><br>
+                  <input type="email" name="email" id="email" class="form-control" placeholder="example@example.com">
+              </div>
+              <div class="form-group">
+                  <label for="password" class="text-light">Password:</label><br>
+                  <input type="text" name="password" id="password" class="form-control">
+              </div>
+              <div class="form-group text-center">
+                  <button type="submit" class="btn btn-dark m-3" id="btn-register">Register</button>
+              </div>
+              <div id="login-link" class="text-light">
+                  <p class="text-center">If you already have an account</p>
+                  <a href="{% url 'login' %}" class="text-light d-flex justify-content-center text-center">Login
+                      Here</a>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Company, Employee, Project, Sprint, Case
+from .models import Company, Project, Sprint, Case
 
 
 # Pages
@@ -11,8 +11,16 @@ def register(request):
     return render(request, "planner/register.html")
 
 
-def profile(request):
-    return render(request, 'planner/profile.html')
+def projects(request):
+    return render(request, 'planner/projects.html')
+
+
+def sprints(request):
+    return render(request, 'planner/sprints.html')
+
+
+def cases(request):
+    return render(request, 'planner/cases.html')
 
 
 # RENDER MODELS

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+from django.conf import settings
 
 if os.path.isfile("env.py"):
     import env
@@ -42,11 +43,23 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
     'planner'
 ]
+
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = 'projects'
+LOGOUT_REDIRECT_URL = 'accounts/login/'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+settings.AUTH_USER_MODEL = 'core.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
