@@ -1,7 +1,7 @@
 from django.db import models
 import uuid
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 
 
 class Company(models.Model):
@@ -13,24 +13,31 @@ class Company(models.Model):
     created_at = models.DateField(auto_now_add=True, null=True)
 
 
-class User(AbstractUser):
+class User_Profile(models.Model):
 
     class Role(models.TextChoices):
         CLIENT = 'client', _('CLIENT')
         DEVELOPER = 'developer', _('DEVELOPER')
         ADMIN = 'admin', _('ADMIN')
 
-    # emplyee_id = models.UUIDField(
-    #     primary_key=True,
-    #     default=uuid.uuid4,
-    #     editable=False)
-    # first_name = models.CharField(max_length=255)
-    # last_name = models.CharField(max_length=255)
-    # role = models.CharField(
-    #     max_length=9,
-    #     choices=Role.choices,
-    #     default=Role.CLIENT)
-    # company_id = models.ForeignKey(Company, on_delete=models.DO_NOTHING)
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
+    role = models.CharField(
+        max_length=9,
+        choices=Role.choices,
+        default=Role.CLIENT,
+        null=True,
+        blank=True)
+    company_id = models.ForeignKey(
+        Company,
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True)
+    user_id = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True)
 
 
 class Project(models.Model):

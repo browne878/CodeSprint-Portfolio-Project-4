@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="register" class="container">
+    <div id="register-row" class="row vertical-center">
+        <div id="register-box" class="col-md-12">
+            <form id="register-form" class="form" action="new-company" method="post">
+                {% csrf_token %}
+                <h3 class="text-center text-light overflow-hidden">Create A Company</h3>
+                <div class="form-group">
+                    <label for="name" class="text-light">Company Name:</label><br>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Awesome Company">
+                </div>
+
+                <input type="hidden" name="user" class="form-control" value="{{ user }}" />
+
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-dark m-3" id="btn-create-company">Create</button>
+                </div>
+
+                <p class="text-light text-center">Or, if you do not have a company and are joining one, click below and inform the admin to have you added to the company</p>
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-dark m-3" id="btn-company-continue">Continue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

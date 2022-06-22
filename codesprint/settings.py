@@ -55,9 +55,11 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = 'projects'
-LOGOUT_REDIRECT_URL = 'accounts/login/'
+ACCOUNT_SIGNUP_REDIRECT_URL = '/create-profile'
+LOGIN_REDIRECT_URL = '/projects'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_LOGOUT_ON_GET = True
 
 settings.AUTH_USER_MODEL = 'core.User'
 
@@ -105,7 +107,6 @@ WSGI_APPLICATION = 'codesprint.wsgi.application'
 DATABASES = {
    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
-
 
 
 # Password validation

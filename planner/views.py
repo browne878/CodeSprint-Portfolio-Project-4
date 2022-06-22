@@ -1,16 +1,10 @@
-from django.shortcuts import render
-from .models import Company, Project, Sprint, Case
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views import View
+from .models import Company, Project, Sprint, Case, User_Profile
+from django.contrib.auth.models import User
 
 
 # Pages
-def login(request):
-    return render(request, "planner/login.html")
-
-
-def register(request):
-    return render(request, "planner/register.html")
-
-
 def projects(request):
     return render(request, 'planner/projects.html')
 
@@ -23,64 +17,39 @@ def cases(request):
     return render(request, 'planner/cases.html')
 
 
-# RENDER MODELS
-def get_company(request):
-    return request
+def create_profile(request):
+    return render(request, 'planner/create_profile.html')
 
 
-def get_employee(request):
-    return request
+def new_profile(request):
+    if request.method == 'POST':
+        first_name = request.POST.get('fname')
+        last_name = request.POST.get('lname')
+        username = request.POST.get('user')
+        user = User.objects.get(username=username)
+        try:
+            User_Profile.objects.get(user_id=user)
+        except User_Profile.DoesNotExist:
+            User_Profile.objects.create(first_name=first_name,
+                                        last_name=last_name,
+                                        role=User_Profile.Role.CLIENT,
+                                        user_id=user)
+            return redirect('create-company')
+
+    return render(request, 'planner/create_profile.html')
 
 
-def get_project(request):
-    return request
+def create_company(request):
+    return render(request, 'planner/create_company.html')
 
 
-def get_sprint(request):
-    return request
-
-
-def get_case(request):
-    return request
-
-
-# EDIT MODELS
-def edit_company(request):
-    return request
-
-
-def edit_employee(request):
-    return request
-
-
-def edit_project(request):
-    return request
-
-
-def edit_sprint(request):
-    return request
-
-
-def edit_case(request):
-    return request
-
-
-# CREATE MODELS
-def add_company(request):
-    return request
-
-
-def add_employee(request):
-    return request
-
-
-def add_project(request):
-    return request
-
-
-def add_sprint(request):
-    return request
-
-
-def add_case(request):
-    return request
+def new_company(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        username = request.POST.get('user')
+        user = User.objects.get(username=username)
+        user_profile = User_Profile.objects.get(user_id=user)
+        Company.objects.create(name=name)
+        user_profile.company_id = Company.objects.get(name=name)
+        user_profile.save()
+        return redirect('projects')

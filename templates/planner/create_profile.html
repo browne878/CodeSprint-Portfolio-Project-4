@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="create-profile" class="container">
+    <div id="create-profile-row" class="row vertical-center">
+        <div id="create-profile-box" class="col-md-12">
+            <form id="create-profile-form" class="form" action="new-profile" method="post">
+                {% csrf_token %}
+                <h3 class="text-center text-light overflow-hidden">Create Your Profile</h3>
+                <div class="form-group">
+                    <label for="fname" class="text-light">First Name:</label><br>
+                    <input type="text" name="fname" id="fname" class="form-control" placeholder="Joe">
+                </div>
+                <div class="form-group">
+                    <label for="lname" class="text-light">Last Name:</label><br>
+                    <input type="text" name="lname" id="lname" class="form-control" placeholder="Blogs">
+                </div>
+                <input type="hidden" name="user" class="form-control" value="{{ user }}" />
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-dark m-3" id="btn-create-profile">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
