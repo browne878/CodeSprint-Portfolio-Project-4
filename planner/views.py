@@ -6,14 +6,65 @@ from django.contrib.auth.models import User
 
 # Pages
 def projects(request):
-    return render(request, 'planner/projects.html')
+    projects = Project.objects.filter(
+        company=User_Profile.objects.get(user_id=request.user).company_id)
+    context = {
+        'projects': {}
+    }
+    for project in projects:
+        try:
+            context['projects'][project.name] = Sprint.objects.filter(
+                project=project)
+        except Sprint.DoesNotExist:
+            context['projects'][project.name] = 'No Sprints Found'
+    return render(request, 'planner/projects.html', context)
 
 
-def sprints(request):
-    return render(request, 'planner/sprints.html')
+def new_project(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        user = User.objects.get(username=request.user)
+        company = Company.objects.get(owner=user)
+        Project.objects.create(name=name, company=company)
+        user_profile = User_Profile.objects.get(user_id=user)
+        user_profile.role = User_Profile.Role.ADMIN
+        user_profile.save()
+    return redirect('projects')
 
 
-def cases(request):
+def sprints(request, project):
+    company = User_Profile.objects.get(user_id=request.user).company_id
+    project = Project.objects.get(
+        company=company)
+    sprints = Sprint.objects.filter(project=project)
+    context = {
+        'sprints': {}
+    }
+    for sprint in sprints:
+        try:
+            context.sprints[sprint.name] = Case.objects.get(sprint=sprint)
+        except Case.DoesNotExist:
+            context['sprints'][sprint.name] = 'No Cases Found'
+    return render(request, 'planner/sprints.html', context)
+
+
+def new_sprint(request, project):
+    if request.method == 'POST':
+        Sprint.objects.create(
+            name=request.POST.get('name'),
+            starts_at=request.POST.get('date-starts'),
+            ends_at=request.POST.get('date-ends'),
+            project=Project.objects.get(
+                company=User_Profile.objects.get(
+                    user_id=request.user
+                    ).company_id,
+                name=project
+            )
+        )
+    return redirect('sprints', project)
+
+
+def cases(request, sprint):
     return render(request, 'planner/cases.html')
 
 
@@ -49,7 +100,7 @@ def new_company(request):
         username = request.POST.get('user')
         user = User.objects.get(username=username)
         user_profile = User_Profile.objects.get(user_id=user)
-        Company.objects.create(name=name)
+        Company.objects.create(name=name, owner=user)
         user_profile.company_id = Company.objects.get(name=name)
         user_profile.save()
         return redirect('projects')

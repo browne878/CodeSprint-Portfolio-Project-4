@@ -21,11 +21,13 @@ from planner import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('projects', views.projects, name='projects'),
-    path('sprints', views.sprints, name='sprints'),
-    path('cases', views.cases, name='cases'),
+    path('sprints/<str:project>', views.sprints, name='sprints'),
+    path('cases/<str:sprint>', views.cases, name='cases'),
     path('accounts/', include('allauth.urls')),
     path('new-profile', views.new_profile, name='profile'),
     path('create-profile', views.create_profile, name='create-profle'),
     path('new-company', views.new_company, name='company'),
-    path('create-company', views.create_company, name='create-company')
+    path('create-company', views.create_company, name='create-company'),
+    path('new-project', views.new_project, name='new-project'),
+    path('new-sprint/<str:project>', views.new_sprint, name='new-sprint')
 ]

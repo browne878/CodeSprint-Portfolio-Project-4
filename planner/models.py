@@ -10,6 +10,11 @@ class Company(models.Model):
         default=uuid.uuid4,
         editable=False)
     name = models.CharField(max_length=255, null=True)
+    owner = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True)
     created_at = models.DateField(auto_now_add=True, null=True)
 
 
@@ -47,7 +52,7 @@ class Project(models.Model):
         editable=False)
     name = models.CharField(max_length=255)
     created_at = models.DateField(auto_now_add=True)
-    owner = models.ForeignKey(Company, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
 
 
 class Sprint(models.Model):
