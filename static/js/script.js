@@ -46,4 +46,36 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+
+    if (window.location.href.split('/').includes('cases')) {
+        const closeButtons = document.getElementsByClassName('toggle-new-case');
+
+        for (const button of closeButtons) {
+            button.addEventListener('click', () => {
+                $('#new-case').modal('toggle');
+            });
+        }
+    }
+
+    if (window.location.href.split('/').includes('cases')) {
+        const caseRows = document.getElementsByClassName('case-row');
+        const buttons = document.getElementsByClassName('toggle-edit-case');
+
+        for (const row of caseRows) {
+            row.addEventListener('touchend', () => {
+                $(`#edit-case-${row.id}`).modal('toggle');
+            });
+
+            row.addEventListener('dblclick', () => {
+                $(`#edit-case-${row.id}`).modal('toggle');
+            });
+
+            for (const button of buttons) {
+                button.addEventListener('click', () => {
+                    $(`#edit-case-${row.id}`).modal('hide');
+                });
+            }
+        }
+
+    }
 });

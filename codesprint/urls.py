@@ -29,5 +29,12 @@ urlpatterns = [
     path('new-company', views.new_company, name='company'),
     path('create-company', views.create_company, name='create-company'),
     path('new-project', views.new_project, name='new-project'),
-    path('new-sprint/<str:project>', views.new_sprint, name='new-sprint')
+    path('new-sprint/<str:project>', views.new_sprint, name='new-sprint'),
+    path('new-case/<str:sprint>', views.new_case, name='new-case'),
+    path('edit-case/<str:sprint>/<case>', views.edit_case, name='edit-case'),
+    path(
+        'delete-case/<str:sprint>/<case>',
+        views.delete_case,
+        name='delete-case'
+        )
 ]

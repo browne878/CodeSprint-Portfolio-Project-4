@@ -39,3 +39,8 @@ p {
 .accordion-button:not(.collapsed) {
     background-color: #6c757d;
 }
+
+/* Media Queries */
+
+@media screen and (min-height: 990px) {
+}

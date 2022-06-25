@@ -6,24 +6,260 @@
     <table class="table table-hover table-bordered table-dark">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">Status</th>
                 <th scope="col">Name</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Markaaaaaaaaaaaaaaaaaaaaaaaaa</td>
+            {% for case in cases %}
+            <tr id="{{ case.case_id }}" class="case-row">
+                <th scope="row">{{ case.status }}</th>
+                <td>{{ case.title }}</td>
             </tr>
+            {% endfor %}
             <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry the Bird</td>
-            </tr>
         </tbody>
     </table>
+
+    {% for case in cases %}
+    <div class="modal fade" id="edit-case-{{ case.case_id }}" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-dark-gray">
+                    <h5 class="modal-title">Edit a Case</h5>
+                    <button type="button" class="close toggle-edit-case" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container modal-body bg-dark">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form id="edit-case-form-{{ case.case_id }}" class="form"
+                                action="{% url 'edit-case' request.resolver_match.kwargs.sprint case.case_id %}"
+                                method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="m-3">
+                                        <label for="title" class="text-light">Case Title:</label><br>
+                                        <input type="text" name="title" id="title" class="form-control"
+                                            value="{{ case.title }}">
+                                    </div>
+
+                                    <div class="m-3">
+                                        <label for="status">Case Status:</label>
+                                        <select id="status" name="status" class="form-select"
+                                            aria-label="Status select">
+                                            {% if case.status == 'PENDING' %}
+                                            <option selected value="PENDING">Pending</option>
+                                            {% else %}
+                                            <option value="PENDING">Pending</option>
+                                            {% endif %}
+
+                                            {% if case.status == 'IN_FE_DEVELOPMENT' %}
+                                            <option selected value="IN_FE_DEVELOPMENT">In Frontend Development</option>
+                                            {% else %}
+                                            <option value="IN_FE_DEVELOPMENT">In Frontend Development</option>
+                                            {% endif %}
+
+                                            {% if case.status == 'IN_BE_DEVELOPMENT' %}
+                                            <option selected value="IN_BE_DEVELOPMENT">In Backend Development</option>
+                                            {% else %}
+                                            <option value="IN_BE_DEVELOPMENT">In Backend Development</option>
+                                            {% endif %}
+
+                                            {% if case.status == 'TESTING' %}
+                                            <option selected value="TESTING">Testing</option>
+                                            {% else %}
+                                            <option value="TESTING">Testing</option>
+                                            {% endif %}
+
+                                            {% if case.status == 'COMPLETED' %}
+                                            <option selected value="COMPLETED">Completed</option>
+                                            {% else %}
+                                            <option value="COMPLETED">Completed</option>
+                                            {% endif %}
+                                        </select>
+                                    </div>
+
+                                    <div class="m-3">
+                                        <label for="category">Case Category:</label>
+                                        <select id="category" name="category" class="form-select"
+                                            aria-label="Category select">
+                                            {% if case.category == 'BUG' %}
+                                            <option selected value="BUG">Bug</option>
+                                            {% else %}
+                                            <option value="BUG">Bug</option>
+                                            {% endif %}
+
+                                            {% if case.category == 'FEATURE' %}
+                                            <option selected value="FEATURE">Feature</option>
+                                            {% else %}
+                                            <option value="FEATURE">Feature</option>
+                                            {% endif %}
+
+                                            {% if case.category == 'CHANGE' %}
+                                            <option selected value="CHANGE">Change</option>
+                                            {% else %}
+                                            <option value="CHANGE">Change</option>
+                                            {% endif %}
+                                        </select>
+                                    </div>
+
+                                    <div class="m-3">
+                                        <label for="date-due" class="text-light">Date Due:</label><br>
+                                        <input type="date" name="date-due" id="date-due" class="form-control"
+                                            value='{{ case.due_date|date:"Y-m-d" }}'>
+                                    </div>
+
+                                    <div class="m-3">
+                                        <label for="size">Task Size:</label>
+                                        <select id="size" name="size" class="form-select" aria-label="Category select">
+                                            {% if case.task_size == 'VSMALL' %}
+                                            <option selected value="VSMALL">Very Small</option>
+                                            {% else %}
+                                            <option value="VSMALL">Very Small</option>
+                                            {% endif %}
+
+                                            {% if case.task_size == 'SMALL' %}
+                                            <option selected value="SMALL">Small</option>
+                                            {% else %}
+                                            <option value="SMALL">Small</option>
+                                            {% endif %}
+
+                                            {% if case.task_size == 'MEDIUM' %}
+                                            <option selected value="MEDIUM">Medium</option>
+                                            {% else %}
+                                            <option value="MEDIUM">Medium</option>
+                                            {% endif %}
+
+                                            {% if case.task_size == 'LARGE' %}
+                                            <option selected value="LARGE">Large</option>
+                                            {% else %}
+                                            <option value="LARGE">Large</option>
+                                            {% endif %}
+
+                                            {% if case.task_size == 'VLARGE' %}
+                                            <option selected value="VLARGE">Very Large</option>
+                                            {% else %}
+                                            <option value="VLARGE">Very Large</option>
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" name="user" class="form-control" value="{{ user }}" />
+
+                            </form>
+                            <form action="{% url 'delete-case' request.resolver_match.kwargs.sprint case.case_id %}"
+                                method="post" id="delete-case-{{ case.case_id }}" class="form">
+                                {% csrf_token %}
+                                <input type="submit" class="btn btn-danger m-3" value="Delete Case"
+                                    form="delete-case-{{ case.case_id }}">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-dark-gray">
+                    <button type="button" class="btn btn-secondary toggle-edit-case" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" form="edit-case-form-{{ case.case_id }}"
+                        value="Save Changes">
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+
+    <div>
+        <div class="justify-content-center">
+            <button type="button" class="btn btn-dark btn-lg toggle-new-case mt-4" data-toggle="modal"
+                data-target="#new-case">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+
+        <div class="modal fade" id="new-case" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark-gray">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Create a Case</h5>
+                        <button type="button" class="close toggle-new-case" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="container modal-body bg-dark">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form id="new-case-form" class="form"
+                                    action="{% url 'new-case' request.resolver_match.kwargs.sprint %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <div class="m-3">
+                                            <label for="title" class="text-light">Case Title:</label><br>
+                                            <input type="text" name="title" id="title" class="form-control"
+                                                placeholder="Awesome Case">
+                                        </div>
+
+                                        <div class="m-3">
+                                            <label for="status">Case Status:</label>
+                                            <select id="status" name="status" class="form-select"
+                                                aria-label="Status select">
+                                                <option selected>Select a Status</option>
+                                                <option value="PENDING">Pending</option>
+                                                <option value="IN_FE_DEVELOPMENT">In Frontend Development</option>
+                                                <option value="IN_BE_DEVELOPMENT">In Backend Development</option>
+                                                <option value="TESTING">Testing</option>
+                                                <option value="COMPLETED">Completed</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="m-3">
+                                            <label for="category">Case Category:</label>
+                                            <select id="category" name="category" class="form-select"
+                                                aria-label="Category select">
+                                                <option selected>Select a Category</option>
+                                                <option value="BUG">Bug</option>
+                                                <option value="FEATURE">Feature</option>
+                                                <option value="CHANGE">Change</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="m-3">
+                                            <label for="date-due" class="text-light">Date Due:</label><br>
+                                            <input type="date" name="date-due" id="date-due" class="form-control">
+                                        </div>
+
+                                        <div class="m-3">
+                                            <label for="size">Task Size:</label>
+                                            <select id="size" name="size" class="form-select"
+                                                aria-label="Category select">
+                                                <option selected>Select a Task Size</option>
+                                                <option value="VSMALL">Very Small</option>
+                                                <option value="SMALL">Small</option>
+                                                <option value="MEDIUM">Medium</option>
+                                                <option value="LARGE">Large</option>
+                                                <option value="VLARGE">Very Large</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" name="user" class="form-control" value="{{ user }}" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-dark-gray">
+                        <button type="button" class="btn btn-secondary toggle-new-case"
+                            data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" form="new-case-form" value="Save Changes">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 {% endblock content %}

@@ -1,5 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views import View
+from django.shortcuts import render, redirect
 from .models import Company, Project, Sprint, Case, User_Profile
 from django.contrib.auth.models import User
 
@@ -42,7 +41,9 @@ def sprints(request, project):
     }
     for sprint in sprints:
         try:
-            context.sprints[sprint.name] = Case.objects.get(sprint=sprint)
+            context['sprints'][sprint.name] = Case.objects.filter(
+                sprint=sprint
+            )
         except Case.DoesNotExist:
             context['sprints'][sprint.name] = 'No Cases Found'
     return render(request, 'planner/sprints.html', context)
@@ -65,7 +66,45 @@ def new_sprint(request, project):
 
 
 def cases(request, sprint):
-    return render(request, 'planner/cases.html')
+    current_sprint = Sprint.objects.get(name=sprint)
+    cases = Case.objects.filter(sprint=current_sprint)
+    context = {
+        'cases': cases
+    }
+    return render(request, 'planner/cases.html', context)
+
+
+def new_case(request, sprint):
+    if request.method == 'POST':
+        Case.objects.create(
+            category=request.POST.get('category'),
+            title=request.POST.get('title'),
+            status=request.POST.get('status'),
+            due_date=request.POST.get('date-due'),
+            task_size=request.POST.get('size'),
+            sprint=Sprint.objects.get(name=sprint)
+        )
+    return redirect('cases', sprint)
+
+
+def edit_case(request, sprint, case):
+    print(request.method)
+    if request.method == 'POST':
+        found_case = Case.objects.get(case_id=case)
+        found_case.title = request.POST.get('title')
+        found_case.category = request.POST.get('category')
+        found_case.status = request.POST.get('status')
+        found_case.due_date = request.POST.get('date-due')
+        found_case.task_size = request.POST.get('size')
+        found_case.save()
+    return redirect('cases', sprint)
+
+
+def delete_case(request, sprint, case):
+    print(request.method)
+    if request.method == 'POST':
+        Case.objects.filter(case_id=case).delete()
+    return redirect('cases', sprint)
 
 
 def create_profile(request):
