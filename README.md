@@ -10,27 +10,26 @@ My aim for CodeSprint is to provide a development assistant that allows all leve
 
 ## **Table of Contents**
 
-- ### [Planning]()
+- ### [Planning](https://github.com/browne878/CodeSprint-Portfolio-Project-4#planning-1)
 
-- ### [Features]()
-    - [Instructions]()
+- ### [Features](https://github.com/browne878/CodeSprint-Portfolio-Project-4#features-1)
 
-- ### [Models]()
+- ### [Models](https://github.com/browne878/CodeSprint-Portfolio-Project-4#models-1)
 
-- ### [Future Development]()
+- ### [Future Development](https://github.com/browne878/CodeSprint-Portfolio-Project-4#future-development-1)
 
-- ### [Testing]()
+- ### [Testing](https://github.com/browne878/CodeSprint-Portfolio-Project-4#testing-1)
 
-- ### [Bugs]()
-    - [Unfixed Bugs]()
-    - [Fixed Bugs]()
+- ### [Bugs](https://github.com/browne878/CodeSprint-Portfolio-Project-4#bugs-1)
+    - [Unfixed Bugs](https://github.com/browne878/CodeSprint-Portfolio-Project-4#unfixed-bugs)
+    - [Fixed Bugs](https://github.com/browne878/CodeSprint-Portfolio-Project-4#fixed-bugs)
 
-- ### [Deployment]()
-    - [Cloning/Forking Repository]()
-    - [Local Deployment]()
-    - [Remote Deployment]()
+- ### [Deployment](https://github.com/browne878/CodeSprint-Portfolio-Project-4#deployment-1)
+    - [Cloning/Forking Repository](https://github.com/browne878/CodeSprint-Portfolio-Project-4#cloning--forking-repository)
+    - [Local Deployment](https://github.com/browne878/CodeSprint-Portfolio-Project-4#local-deployment)
+    - [Remote Deployment](https://github.com/browne878/CodeSprint-Portfolio-Project-4#remote-deployment)
 
-- ### [Credits]()
+- ### [Credits](https://github.com/browne878/CodeSprint-Portfolio-Project-4#credits-1)
 
 ## **Planning**
 
