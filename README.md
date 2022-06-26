@@ -69,6 +69,7 @@ There are no known bugs at this time.
 
 ### Fixed Bugs
 
+ - During testing, I was unable to run my tests as the application did not have permissions to generate a database. In order to resolve this I added an if statement to check for the DEVELOPMENT env variable and, if found, will use a sqllite database to run the tests.
 
 ## **Deployment**
 
