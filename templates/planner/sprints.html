@@ -21,18 +21,14 @@
                 data-bs-parent="#accordionExample">
                 <div class="accordion-body bg-dark text-light">
                     {% if value.count == 0 %}
-                    <p>No Cases Found</p>
-                    {% elif value.count == 1 %}
-                    <p>
-                        {{ value.title }}
-                    </p>
-                    {% elif value.count > 1 %}
-                    {% for case in value %}
-                    <p class="p-1 m-1">
-                        {{ case.title }}
-                    </p>
-                    <br>
-                    {% endfor %}
+                        <p>No Cases Found</p>
+                    {% else %}
+                        {% for case in value %}
+                            <p class="p-1 m-1">
+                                {{ case.title }}
+                            </p>
+                            <br>
+                        {% endfor %}
                     {% endif %}
                     <br>
                     <a class="text-light" href="{% url 'cases' key %}">
@@ -43,10 +39,18 @@
         </div>
         {% endfor %}
     </div>
+    
+    {% if role == 'developer' %}
     <button type="button" class="btn btn-dark btn-lg toggle-new-sprint mt-4" data-toggle="modal"
         data-target="#new-sprint">
         <i class="fa-solid fa-plus"></i>
     </button>
+    {% elif role == 'admin' %}
+    <button type="button" class="btn btn-dark btn-lg toggle-new-sprint mt-4" data-toggle="modal"
+        data-target="#new-sprint">
+        <i class="fa-solid fa-plus"></i>
+    </button>
+    {% endif %}
 
     <div class="modal fade" id="new-sprint" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">

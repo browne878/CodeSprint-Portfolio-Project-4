@@ -172,12 +172,14 @@
 
 
     <div>
+        {% if role != 'client' %}
         <div class="justify-content-center">
             <button type="button" class="btn btn-dark btn-lg toggle-new-case mt-4" data-toggle="modal"
                 data-target="#new-case">
                 <i class="fa-solid fa-plus"></i>
             </button>
         </div>
+        {% endif %}
 
         <div class="modal fade" id="new-case" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
             aria-hidden="true">

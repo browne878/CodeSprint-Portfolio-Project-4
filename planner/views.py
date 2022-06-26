@@ -1,42 +1,49 @@
 from django.shortcuts import render, redirect
 from .models import Company, Project, Sprint, Case, User_Profile
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
-# Pages
+@login_required
 def projects(request):
+    user = User_Profile.objects.get(user_id=request.user)
+    print(user.role)
     projects = Project.objects.filter(
         company=User_Profile.objects.get(user_id=request.user).company_id)
     context = {
+        'role': user.role,
         'projects': {}
     }
     for project in projects:
-        try:
-            context['projects'][project.name] = Sprint.objects.filter(
-                project=project)
-        except Sprint.DoesNotExist:
-            context['projects'][project.name] = 'No Sprints Found'
+        context['projects'][project.name] = Sprint.objects.filter(
+            project=project)
     return render(request, 'planner/projects.html', context)
 
 
+@login_required
 def new_project(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         user = User.objects.get(username=request.user)
+        user_profile = User_Profile.objects.get(user_id=user)
+        if not user_profile.company_id:
+            print('test')
+            return redirect('create-company')
         company = Company.objects.get(owner=user)
         Project.objects.create(name=name, company=company)
-        user_profile = User_Profile.objects.get(user_id=user)
         user_profile.role = User_Profile.Role.ADMIN
         user_profile.save()
     return redirect('projects')
 
 
+@login_required
 def sprints(request, project):
-    company = User_Profile.objects.get(user_id=request.user).company_id
+    user = User_Profile.objects.get(user_id=request.user)
     project = Project.objects.get(
-        company=company)
+        name=project)
     sprints = Sprint.objects.filter(project=project)
     context = {
+        'role': user.role,
         'sprints': {}
     }
     for sprint in sprints:
@@ -44,11 +51,13 @@ def sprints(request, project):
             context['sprints'][sprint.name] = Case.objects.filter(
                 sprint=sprint
             )
+            print(context['sprints'][sprint.name])
         except Case.DoesNotExist:
             context['sprints'][sprint.name] = 'No Cases Found'
     return render(request, 'planner/sprints.html', context)
 
 
+@login_required
 def new_sprint(request, project):
     if request.method == 'POST':
         Sprint.objects.create(
@@ -65,15 +74,19 @@ def new_sprint(request, project):
     return redirect('sprints', project)
 
 
+@login_required
 def cases(request, sprint):
+    user = User_Profile.objects.get(user_id=request.user)
     current_sprint = Sprint.objects.get(name=sprint)
     cases = Case.objects.filter(sprint=current_sprint)
     context = {
+        'role': user.role,
         'cases': cases
     }
     return render(request, 'planner/cases.html', context)
 
 
+@login_required
 def new_case(request, sprint):
     if request.method == 'POST':
         Case.objects.create(
@@ -87,6 +100,7 @@ def new_case(request, sprint):
     return redirect('cases', sprint)
 
 
+@login_required
 def edit_case(request, sprint, case):
     print(request.method)
     if request.method == 'POST':
@@ -100,6 +114,7 @@ def edit_case(request, sprint, case):
     return redirect('cases', sprint)
 
 
+@login_required
 def delete_case(request, sprint, case):
     print(request.method)
     if request.method == 'POST':
@@ -107,10 +122,12 @@ def delete_case(request, sprint, case):
     return redirect('cases', sprint)
 
 
+@login_required
 def create_profile(request):
     return render(request, 'planner/create_profile.html')
 
 
+@login_required
 def new_profile(request):
     if request.method == 'POST':
         first_name = request.POST.get('fname')
@@ -129,10 +146,12 @@ def new_profile(request):
     return render(request, 'planner/create_profile.html')
 
 
+@login_required
 def create_company(request):
     return render(request, 'planner/create_company.html')
 
 
+@login_required
 def new_company(request):
     if request.method == 'POST':
         name = request.POST.get('name')

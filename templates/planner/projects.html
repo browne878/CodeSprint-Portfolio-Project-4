@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+{{ permission }}
 <div class="container text-light text-center" id="project-page">
     <h3 class="p-4">Projects</h3>
     <div class="accordion" id="accordionExample">
@@ -21,10 +22,8 @@
             <div id="{{ key|cut:' ' }}-collapse" class="accordion-collapse collapse" aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample">
                 <div class="accordion-body bg-dark text-light">
-                    {% if value == 'No Sprints Found' %}
-                        {{ value }}
-                    {% elif value.count == 1 %}
-                        {{ value.name }}
+                    {% if value.count == 0 %}
+                        <p>No Sprints Found</p>
                     {% else %}
                         {% for sprint in value %}
                         <p>
@@ -41,10 +40,14 @@
         </div>
         {% endfor %}
     </div>
+
+    {% if role == 'admin' %}
     <button type="button" class="btn btn-dark btn-lg toggle-new-project mt-4" data-toggle="modal"
         data-target="#new-project">
         <i class="fa-solid fa-plus"></i>
     </button>
+    {% endif %}
+
 
     <div class="modal fade" id="new-project" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
