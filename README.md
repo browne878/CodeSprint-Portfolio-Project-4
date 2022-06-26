@@ -41,6 +41,8 @@ I wanted to create a new tool to help during my development process. This app wa
 
 ## **Models**
 
+I used an application called Moon Modeler to help me build the models for this project. I did need to make a small number of changes during the development process in order for user to be able to login and be related to a company. You can see the model design below.
+
 
 ## **Future Development**
 
