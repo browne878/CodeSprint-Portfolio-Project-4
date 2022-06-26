@@ -6,6 +6,10 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def projects(request):
+    """
+    Returns a list of projects to the front end and renders the page
+    with the role and projects as a parameter for the page
+    """
     user = User_Profile.objects.get(user_id=request.user)
     print(user.role)
     projects = Project.objects.filter(
@@ -22,6 +26,9 @@ def projects(request):
 
 @login_required
 def new_project(request):
+    """
+    Creates a new project in the database and reloads the page
+    """
     if request.method == 'POST':
         name = request.POST.get('name')
         user = User.objects.get(username=request.user)
@@ -38,6 +45,10 @@ def new_project(request):
 
 @login_required
 def sprints(request, project):
+    """
+    Returns a list of sprints to the front end and renders the page
+    with the user role and sprints as a parameter for the page
+    """
     user = User_Profile.objects.get(user_id=request.user)
     project = Project.objects.get(
         name=project)
@@ -59,6 +70,10 @@ def sprints(request, project):
 
 @login_required
 def new_sprint(request, project):
+    """
+    Creates a new sprint in the database and reloads the page
+    with the project name as a parameter
+    """
     if request.method == 'POST':
         Sprint.objects.create(
             name=request.POST.get('name'),
