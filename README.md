@@ -48,7 +48,11 @@ I wanted to create a new tool to help during my development process. This app wa
 
 ## **Testing**
 
-In order to keep the documentation organised and easy to read, I have moved the testing into a seperate file. This file can be found [here]()
+To test this project, I ran my code through PEP8 Checker, W3C Markup Validation Service and the W3C CSS validation Service.
+
+I also went through the website ensuring that everything worked as intended.
+
+I used Django's built in testing to develop tests to check the Login and Register views.
 
 ## **Bugs**
 
@@ -64,7 +68,7 @@ There are no known bugs at this time.
 ### Cloning / Forking Repository
 
 In order to Fork the Repository, please follow the instructions below.
- 1. Navigage to [this](https://github.com/browne878/Sudoku-CLI) repository.
+ 1. Navigage to [this](https://github.com/browne878/CodeSprint-Portfolio-Project-4) repository.
  2. Next, in the top left of the page, click the fork button.
  3. If you are a member of a team, you may need to choose where to Fork the repository too.
 
