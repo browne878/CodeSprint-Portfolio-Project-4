@@ -38,6 +38,11 @@ I wanted to create a new tool to help during my development process. This app wa
 
 ## **Features**
 
+- Ability to create a company or be added to a company by an administrator.
+
+- Role based permissions so that only certain users can create, view, updatate and delete cases.
+
+- Ability to easily read all cases sprints and projects that are active.
 
 ## **Models**
 
