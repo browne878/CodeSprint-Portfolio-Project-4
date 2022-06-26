@@ -1,108 +1,123 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# **CodeSprint**
 
-Welcome browne878,
+You can see the live website [here]([https://browne878-sudoku-cli.herokuapp.com/](https://pp4-codesprint.herokuapp.com/accounts/login/)).
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+The purpose of this website is to give a development company the ability to manage their agile development process and track progress.
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
+This app is meant to be deployed and hosted internally to isolate sensitive information.
 
-## Gitpod Reminders
+My aim for CodeSprint is to provide a development assistant that allows all levels of a company to track their progress on a project.
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+## **Table of Contents**
 
-`python3 -m http.server`
+- ### [Planning]()
 
-A blue button should appear to click: _Make Public_,
+- ### [Features]()
+    - [Instructions]()
 
-Another blue button should appear to click: _Open Browser_.
+- ### [Models]()
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+- ### [Future Development]()
 
-A blue button should appear to click: _Make Public_,
+- ### [Testing]()
 
-Another blue button should appear to click: _Open Browser_.
+- ### [Bugs]()
+    - [Unfixed Bugs]()
+    - [Fixed Bugs]()
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+- ### [Deployment]()
+    - [Cloning/Forking Repository]()
+    - [Local Deployment]()
+    - [Remote Deployment]()
 
-To log into the Heroku toolbelt CLI:
+- ### [Credits]()
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+## **Planning**
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+I wanted to create a new tool to help during my development process. This app was made with what I learnt from using other applications and tools to manage my projects progress.
 
-------
+## **Features**
 
-## Release History
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+## **Models**
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+## **Future Development**
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+- In the future I would add an admin environment where they can manage the users in the company as well as the company itself.
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+## **Testing**
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+In order to keep the documentation organised and easy to read, I have moved the testing into a seperate file. This file can be found [here]()
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+## **Bugs**
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+### Unfixed Bugs
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+There are no known bugs at this time.
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+### Fixed Bugs
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+## **Deployment**
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+### Cloning / Forking Repository
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+In order to Fork the Repository, please follow the instructions below.
+ 1. Navigage to [this](https://github.com/browne878/Sudoku-CLI) repository.
+ 2. Next, in the top left of the page, click the fork button.
+ 3. If you are a member of a team, you may need to choose where to Fork the repository too.
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+Once you have forked the Repository, you can then clone it to your local machine. To do so, please follow the instructions below.
+ 1. Navigate to your Forked repository.
+ 2. Click the green Code button above the repositories files.
+ 3. Copy the URL in the dropdown window.
+ 4. Next, open command prompt.
+ 5. After this, navigate to the directory you would like to clone the repository too with the following command.
+ ```
+cd <clone location>
+ ```
+ 6. Then, run the following command.
+ ```
+git clone <URL>
+ ```
+ 
+You have now forked and cloned the repository.
 
-------
+### Local Deployment
 
-## FAQ about the uptime script
+These instructions will tell you how to deploy the repository on your local machine with VSCode and the extension [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer). Please ensure you have VSCode and the Live Server extension installed before beginning the following steps.
 
-**Why have you added this script?**
+1. First, follow the steps for Cloning and Forking the repository so you have the repository locally.
+2. Open the folder with VSCode by doing one of the following:
+    - Right click the file and click `Open with Code`
+    - Open command prompt, navigate inside the directiory and run the command `code .`
+    - Open VSCode, click file, open folder and then navigate to the repository folder and open it.
+3. Next, at the very bottom of the window, there will be a button that says `Go Live`. Click this button and it will deploy it locally and open it in your default browser for you to view.
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+### Remote Deployment
 
-**How will this affect me?**
+The following instructions will guide you the deployment process for Heroku. I will assume you already have a [Heroku](https://www.heroku.com/) account.
+1. First, follow the instructions to clone the repository to your GitHub.
+2. On Heroku, login and navigate to your dashboard.
+3. In the top right, click `New` and select `Create a new app`.
+4. Next, name your app and select your region and click `Create app`.
+5. After this, under the deployment method, select GitHub and link your account with GitHub.
+6. Then, search for your cloned repository and click `Connect`.
+7. Under the `Automatic deploys` section, ensure the main branch is selected and click the `Enable Automatic Deploys`.
+8. Also, under the main branch is selected in the `Manual deploy` section.
+9. Next, at the top of the page, navigate to the settings page.
+10. After this, go to the resources tab on heroku and search for `Heroku Postgres` under the add-ons tab.
+11. Then, you will need to go to [Cloudinary](https://cloudinary.com/console/c-e41e529a42f687f55f451d5505dfd8/getting-started) and sign up.
+12. Once you have signed up, go to the dashboard and copy the `API Environment variable`.
+13. After this, under the `Config Vars` section, click the `Reveal Config Vars` button and enter the following `CLOUDINARY_URL` : `Variabe from cloudinary website (being sure to remove the CLOUDINARY_URL= from the start` - `SECRET_KEY` : `Generate this yourself but make it random so it is secure`.
+14. Then, in the section below (`Buildpacks`), click `Add buildpack` and select python.
+15. Repeat the previous step, but this time, select NodeJS.
+16. Once this is done, ensure that the python buildpack is at the top of the list. (You can drag them to move them).
+17. Then, at the top of the page, navigate back to the deploy section.
+18. Finally, you can scroll to the bottom of the page and click the `Deploy Branch` button under the `Manual deploy` section.
+19. Once the deployment is complete, you can click the `Open app` button at the top right of the page. This will open the deployed app in a new tab.
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+## **Credits**
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
-
-**Anything more?**
-
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
-
----
-
-Happy coding!
+This app was built using only the documentation from Bootstap, Django and JQuery.
