@@ -172,7 +172,10 @@ def new_profile(request):
 
 @login_required
 def create_company(request):
-    return render(request, 'planner/create_company.html')
+    if request.user.is_superuser:
+        return render(request, 'planner/create_company.html')
+    else:
+        return redirect('projects')
 
 
 @login_required
