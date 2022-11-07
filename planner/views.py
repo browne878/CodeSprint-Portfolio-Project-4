@@ -153,10 +153,18 @@ def new_profile(request):
         username = request.POST.get('user')
         user = User.objects.get(username=username)
         if not UserProfile.objects.filter(id=user.id):
+            role = UserProfile.Role.CLIENT
+
+            if request.user.is_superuser:
+                role = UserProfile.Role.ADMIN
+            elif request.user.is_staff:
+                role = UserProfile.Role.DEVELOPER
+
             UserProfile.objects.create(first_name=first_name,
                                        last_name=last_name,
-                                       role=UserProfile.Role.CLIENT,
+                                       role=role,
                                        user_id=user)
+
             return redirect('projects')
 
     return render(request, 'planner/create_profile.html')
