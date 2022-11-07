@@ -152,14 +152,12 @@ def new_profile(request):
         last_name = request.POST.get('lname')
         username = request.POST.get('user')
         user = User.objects.get(username=username)
-        try:
-            User.objects.get(id=user.id)
-        except User.DoesNotExist:
-            User.objects.create(first_name=first_name,
-                                last_name=last_name,
-                                role=User.Role.CLIENT,
-                                user_id=user)
-            return redirect('create-company')
+        if not UserProfile.objects.filter(id=user.id):
+            UserProfile.objects.create(first_name=first_name,
+                                       last_name=last_name,
+                                       role=UserProfile.Role.CLIENT,
+                                       user_id=user)
+            return redirect('projects')
 
     return render(request, 'planner/create_profile.html')
 
