@@ -18,7 +18,7 @@ class Company(models.Model):
     created_at = models.DateField(auto_now_add=True, null=True)
 
 
-class User_Profile(models.Model):
+class UserProfile(models.Model):
 
     class Role(models.TextChoices):
         CLIENT = 'client', _('CLIENT')

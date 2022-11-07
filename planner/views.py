@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Company, Project, Sprint, Case, User_Profile
+from .models import Company, Project, Sprint, Case, UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
@@ -10,15 +10,18 @@ def projects(request):
     Returns a list of projects to the front end and renders the page
     with the role and projects as a parameter for the page
     """
-    user = User_Profile.objects.get(user_id=request.user)
-    print(user.role)
-    projects = Project.objects.filter(
-        company=User_Profile.objects.get(user_id=request.user).company_id)
+
+    if not UserProfile.objects.filter(user_id=request.user):
+        return redirect('create-profile')
+
+    user = UserProfile.objects.get(user_id=request.user)
+    existing_projects = Project.objects.filter(
+        company=UserProfile.objects.get(user_id=request.user).company_id)
     context = {
         'role': user.role,
         'projects': {}
     }
-    for project in projects:
+    for project in existing_projects:
         context['projects'][project.name] = Sprint.objects.filter(
             project=project)
     return render(request, 'planner/projects.html', context)
@@ -32,13 +35,13 @@ def new_project(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         user = User.objects.get(username=request.user)
-        user_profile = User_Profile.objects.get(user_id=user)
+        user_profile = User.objects.get(user_id=user)
         if not user_profile.company_id:
             print('test')
             return redirect('create-company')
         company = Company.objects.get(owner=user)
         Project.objects.create(name=name, company=company)
-        user_profile.role = User_Profile.Role.ADMIN
+        user_profile.role = User.Role.ADMIN
         user_profile.save()
     return redirect('projects')
 
@@ -49,7 +52,7 @@ def sprints(request, project):
     Returns a list of sprints to the front end and renders the page
     with the user role and sprints as a parameter for the page
     """
-    user = User_Profile.objects.get(user_id=request.user)
+    user = UserProfile.objects.get(user_id=request.user)
     project = Project.objects.get(
         name=project)
     sprints = Sprint.objects.filter(project=project)
@@ -80,9 +83,9 @@ def new_sprint(request, project):
             starts_at=request.POST.get('date-starts'),
             ends_at=request.POST.get('date-ends'),
             project=Project.objects.get(
-                company=User_Profile.objects.get(
+                company=UserProfile.objects.get(
                     user_id=request.user
-                    ).company_id,
+                ).company_id,
                 name=project
             )
         )
@@ -91,7 +94,7 @@ def new_sprint(request, project):
 
 @login_required
 def cases(request, sprint):
-    user = User_Profile.objects.get(user_id=request.user)
+    user = UserProfile.objects.get(user_id=request.user)
     current_sprint = Sprint.objects.get(name=sprint)
     cases = Case.objects.filter(sprint=current_sprint)
     context = {
@@ -150,12 +153,12 @@ def new_profile(request):
         username = request.POST.get('user')
         user = User.objects.get(username=username)
         try:
-            User_Profile.objects.get(user_id=user)
-        except User_Profile.DoesNotExist:
-            User_Profile.objects.create(first_name=first_name,
-                                        last_name=last_name,
-                                        role=User_Profile.Role.CLIENT,
-                                        user_id=user)
+            User.objects.get(id=user.id)
+        except User.DoesNotExist:
+            User.objects.create(first_name=first_name,
+                                last_name=last_name,
+                                role=User.Role.CLIENT,
+                                user_id=user)
             return redirect('create-company')
 
     return render(request, 'planner/create_profile.html')
@@ -172,7 +175,7 @@ def new_company(request):
         name = request.POST.get('name')
         username = request.POST.get('user')
         user = User.objects.get(username=username)
-        user_profile = User_Profile.objects.get(user_id=user)
+        user_profile = User.objects.get(user_id=user)
         Company.objects.create(name=name, owner=user)
         user_profile.company_id = Company.objects.get(name=name)
         user_profile.save()

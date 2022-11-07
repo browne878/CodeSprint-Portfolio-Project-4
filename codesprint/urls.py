@@ -25,7 +25,7 @@ urlpatterns = [
     path('cases/<str:sprint>', views.cases, name='cases'),
     path('accounts/', include('allauth.urls')),
     path('new-profile', views.new_profile, name='profile'),
-    path('create-profile', views.create_profile, name='create-profle'),
+    path('create-profile', views.create_profile, name='create-profile'),
     path('new-company', views.new_company, name='company'),
     path('create-company', views.create_company, name='create-company'),
     path('new-project', views.new_project, name='new-project'),
