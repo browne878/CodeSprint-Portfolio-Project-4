@@ -4,6 +4,9 @@
 {{ permission }}
 <div class="container text-light text-center" id="project-page">
     <h3 class="p-4">Projects</h3>
+    {% if projects|length == 0 %}
+        <p class="text-center">No projects found</p>
+    {% endif %}
     <div class="accordion" id="accordionExample">
         {{ Test }}
         {% if projects.count == 0 %}

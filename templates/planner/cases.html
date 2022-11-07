@@ -3,6 +3,9 @@
 {% block content %}
 <div class="container text-light text-center">
     <h3 class="p-4">Cases</h3>
+    {% if projects|length == 0 %}
+        <p class="text-center">No cases found</p>
+    {% endif %}
     <table class="table table-hover table-bordered table-dark">
         <thead>
             <tr>

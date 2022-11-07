@@ -3,6 +3,9 @@
 {% block content %}
 <div class="container text-light text-center" id="project-page">
     <h3 class="p-4">Sprints</h3>
+    {% if projects|length == 0 %}
+        <p class="text-center">No sprints found</p>
+    {% endif %}
     <div class="accordion" id="accordionExample">
         {% if sprints.count == 0 %}
         <p>There are no current sprints</p>
