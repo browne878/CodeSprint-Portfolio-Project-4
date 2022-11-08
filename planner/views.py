@@ -40,7 +40,7 @@ def new_project(request):
             return redirect('create-company')
         company = Company.objects.get(owner=user)
         Project.objects.create(name=name, company=company)
-        user_profile.role = User.Role.ADMIN
+        user_profile.role = UserProfile.Role.ADMIN
         user_profile.save()
     return redirect('projects')
 
