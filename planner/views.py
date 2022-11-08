@@ -35,9 +35,8 @@ def new_project(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         user = User.objects.get(username=request.user)
-        user_profile = User.objects.get(user_id=user)
+        user_profile = UserProfile.objects.get(user_id=user)
         if not user_profile.company_id:
-            print('test')
             return redirect('create-company')
         company = Company.objects.get(owner=user)
         Project.objects.create(name=name, company=company)
@@ -184,7 +183,7 @@ def new_company(request):
         name = request.POST.get('name')
         username = request.POST.get('user')
         user = User.objects.get(username=username)
-        user_profile = User.objects.get(user_id=user)
+        user_profile = UserProfile.objects.get(user_id=user)
         Company.objects.create(name=name, owner=user)
         user_profile.company_id = Company.objects.get(name=name)
         user_profile.save()
