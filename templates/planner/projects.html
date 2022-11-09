@@ -1,89 +1,111 @@
 {% extends "base.html" %}
 
 {% block content %}
-{{ permission }}
-<div class="container text-light text-center" id="project-page">
-    <h3 class="p-4">Projects</h3>
-    {% if projects|length == 0 %}
-        <p class="text-center">No projects found</p>
-    {% endif %}
-    <div class="accordion" id="accordionExample">
-        {{ Test }}
-        {% if projects.count == 0 %}
-        <p>There are no current projects</p>
+    <div class="container text-light text-center" id="project-page">
+        <h3 class="p-4">Projects</h3>
+        {% if projects|length == 0 %}
+            <p class="text-center">No projects found</p>
         {% endif %}
+        <div class="accordion" id="accordionExample">
+            {{ Test }}
+            {% if projects.count == 0 %}
+                <p>There are no current projects</p>
+            {% endif %}
 
-        {% for key, value in projects.items %}
-        <div class="accordion-item no-border">
-            <h2 class="accordion-header" id="headingOne">
-                <button id="{{ key|cut:' ' }}" class="accordion-button collapsed bg-dark-gray no-border text-light" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#{{ key|cut:' ' }}-collapse" aria-expanded="true"
-                    aria-controls="collapseOne">
-                    {{ key }}
-                </button>
-            </h2>
-            <div id="{{ key|cut:' ' }}-collapse" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample">
-                <div class="accordion-body bg-dark text-light">
-                    {% if value.count == 0 %}
-                        <p>No Sprints Found</p>
-                    {% else %}
-                        {% for sprint in value %}
-                        <p>
-                            {{ sprint.name }}
-                        </p>
-                        {% endfor %}
-                    {% endif %}
-                    <br>
-                    <a class="text-light" href="{% url 'sprints' key %}">
-                        <button id="gt-sprints" type="button" class="btn btn-secondary mt-4">Go To Sprints</button>
-                    </a>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
+            {% for key, value in projects.items %}
+                <div class="accordion-item no-border">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button id="{{ key|cut:' ' }}"
+                                class="accordion-button collapsed bg-dark-gray no-border text-light" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#{{ key|cut:' ' }}-collapse"
+                                aria-expanded="true"
+                                aria-controls="collapseOne">
+                            {{ key }}
+                        </button>
+                    </h2>
+                    <div id="{{ key|cut:' ' }}-collapse" class="accordion-collapse collapse"
+                         aria-labelledby="headingOne"
+                         data-bs-parent="#accordionExample">
+                        <div class="accordion-body bg-dark text-light">
+                            {% if value.count == 0 %}
+                                <p>No Sprints Found</p>
+                            {% else %}
+                                {% for sprint in value %}
+                                    <p>
+                                        {{ sprint.name }}
+                                    </p>
+                                {% endfor %}
+                            {% endif %}
+                            <br>
+                            <a class="text-light text-decoration-none" href="{% url 'sprints' key %}">
+                                <button id="gt-sprints" type="button" class="btn btn-secondary mt-4">
+                                    Go To Sprints
+                                </button>
+                            </a>
+                            {% if role == 'admin' %}
+                                <br>
+                                <div>
+                                    <a class="text-light text-decoration-none" href="{% url 'edit-project' key %}">
+                                        <button id="edit-project" type="button" class="btn btn-secondary mt-2 mx-2">
+                                            Edit Project
+                                        </button>
+                                    </a>
 
-    {% if role == 'admin' %}
-    <button type="button" class="btn btn-dark btn-lg toggle-new-project mt-4" data-toggle="modal"
-        data-target="#new-project">
-        <i class="fa-solid fa-plus"></i>
-    </button>
-    {% endif %}
-
-
-    <div class="modal fade" id="new-project" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-dark-gray">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Create a Project</h5>
-                    <button type="button" class="close toggle-new-project" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="container modal-body bg-dark">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form id="new-company-form" class="form" action="new-project" method="post">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <label for="name" class="text-light">Project Name:</label><br>
-                                    <input type="text" name="name" id="name" class="form-control"
-                                        placeholder="Awesome Project">
+                                    <form id="delete-project-{{ key }}" class="form" action="{% url 'delete-project' key %}"
+                                          method="post">
+                                        {% csrf_token %}
+                                        <input class="btn btn-danger mt-2 mx-2" type="submit" value="Delete Project">
+                                    </form>
                                 </div>
-
-                                <input type="hidden" name="user" class="form-control" value="{{ user }}" />
-                            </form>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer bg-dark-gray">
-                    <button type="button" class="btn btn-secondary toggle-new-project"
-                        data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" form="new-company-form" value="Save Changes">
+            {% endfor %}
+        </div>
+
+        {% if role == 'admin' %}
+            <button type="button" class="btn btn-dark btn-lg toggle-new-project mt-4" data-toggle="modal"
+                    data-target="#new-project">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        {% endif %}
+
+
+        <div class="modal fade" id="new-project" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark-gray">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Create a Project</h5>
+                        <button type="button" class="close toggle-new-project" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="container modal-body bg-dark">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form id="new-company-form" class="form" action="new-project" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="name" class="text-light">Project Name:</label><br>
+                                        <input type="text" name="name" id="name" class="form-control"
+                                               placeholder="Awesome Project">
+                                    </div>
+
+                                    <input type="hidden" name="user" class="form-control" value="{{ user }}"/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-dark-gray">
+                        <button type="button" class="btn btn-secondary toggle-new-project"
+                                data-dismiss="modal">Close
+                        </button>
+                        <input type="submit" class="btn btn-primary" form="new-company-form" value="Save Changes">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    {% endblock content %}
+{% endblock content %}

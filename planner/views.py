@@ -46,6 +46,29 @@ def new_project(request):
 
 
 @login_required
+def edit_project(request, project):
+    """
+    Edits a project in the database and reloads the page
+    """
+    return redirect('projects')
+
+
+@login_required
+def delete_project(request, project):
+    """
+    Deletes a project in the database and reloads the page
+    """
+    user_profile = UserProfile.objects.get(user_id=request.user)
+    if user_profile.role == UserProfile.Role.ADMIN:
+        if request.method == 'POST':
+            print('test')
+            if Project.objects.filter(name=project):
+                Project.objects.get(name=project).delete()
+
+        return redirect('projects')
+
+
+@login_required
 def sprints(request, project):
     """
     Returns a list of sprints to the front end and renders the page
