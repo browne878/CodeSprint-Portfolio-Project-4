@@ -1,105 +1,133 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container text-light text-center" id="project-page">
-    <h3 class="p-4">Sprints</h3>
-    {% if projects|length == 0 %}
-        <p class="text-center">No sprints found</p>
-    {% endif %}
-    <div class="accordion" id="accordionExample">
-        {% if sprints.count == 0 %}
-        <p>There are no current sprints</p>
+    <div class="container text-light text-center" id="project-page">
+        <h3 class="p-4">Sprints</h3>
+        {% if projects|length == 0 %}
+            <p class="text-center">No sprints found</p>
         {% endif %}
+        <div class="accordion" id="accordionExample">
+            {% if sprints.count == 0 %}
+                <p>There are no current sprints</p>
+            {% endif %}
 
-        {% for key, value in sprints.items %}
-        <div class="accordion-item no-border">
-            <h2 class="accordion-header" id="headingOne">
-                <button id="{{ key|cut:' ' }}" class="accordion-button collapsed bg-dark-gray no-border text-light"
-                    type="button" data-bs-toggle="collapse" data-bs-target="#{{ key|cut:' ' }}-collapse"
-                    aria-expanded="true" aria-controls="collapseOne">
-                    {{ key }}
-                </button>
-            </h2>
-            <div id="{{ key|cut:' ' }}-collapse" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample">
-                <div class="accordion-body bg-dark text-light">
-                    {% if value.count == 0 %}
-                        <p>No Cases Found</p>
-                    {% else %}
-                        {% for case in value %}
-                            <p class="p-1 m-1">
-                                {{ case.title }}
-                            </p>
+            {% for key, value in sprints.items %}
+                <div class="accordion-item no-border">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button id="{{ key|cut:' ' }}"
+                                class="accordion-button collapsed bg-dark-gray no-border text-light"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#{{ key|cut:' ' }}-collapse"
+                                aria-expanded="true" aria-controls="collapseOne">
+                            {{ key }}
+                        </button>
+                    </h2>
+                    <div id="{{ key|cut:' ' }}-collapse" class="accordion-collapse collapse"
+                         aria-labelledby="headingOne"
+                         data-bs-parent="#accordionExample">
+                        <div class="accordion-body bg-dark text-light">
+                            {% if value.count == 0 %}
+                                <p>No Cases Found</p>
+                            {% else %}
+                                {% for case in value %}
+                                    <p class="p-1 m-1">
+                                        {{ case.title }}
+                                    </p>
+                                    <br>
+                                {% endfor %}
+                            {% endif %}
                             <br>
-                        {% endfor %}
-                    {% endif %}
-                    <br>
-                    <a class="text-light" href="{% url 'cases' key %}">
-                        <button id="gt-sprints" type="button" class="btn btn-secondary mt-4">Go To Sprint</button>
-                    </a>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-    
-    {% if role == 'developer' %}
-    <button type="button" class="btn btn-dark btn-lg toggle-new-sprint mt-4" data-toggle="modal"
-        data-target="#new-sprint">
-        <i class="fa-solid fa-plus"></i>
-    </button>
-    {% elif role == 'admin' %}
-    <button type="button" class="btn btn-dark btn-lg toggle-new-sprint mt-4" data-toggle="modal"
-        data-target="#new-sprint">
-        <i class="fa-solid fa-plus"></i>
-    </button>
-    {% endif %}
-
-    <div class="modal fade" id="new-sprint" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-dark-gray">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Create a Sprint</h5>
-                    <button type="button" class="close toggle-new-sprint" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="container modal-body bg-dark">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form id="new-sprint-form" class="form"
-                                action="{% url 'new-sprint' request.resolver_match.kwargs.project %}" method="post">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <div class="m-3">
-                                        <label for="name" class="text-light">Sprint Name:</label><br>
-                                        <input type="text" name="name" id="name" class="form-control"
-                                            placeholder="Awesome Sprint">
-                                    </div>
-
-                                    <div class="m-3">
-                                        <label for="date-starts" class="text-light">Starts At:</label><br>
-                                        <input type="date" name="date-starts" id="date-starts" class="form-control">
-                                    </div>
-
-                                    <div class="m-3">
-                                        <label for="date-ends" class="text-light">Ends At:</label><br>
-                                        <input type="date" name="date-ends" id="date-ends" class="form-control">
-                                    </div>
+                            <a class="text-light" href="{% url 'cases' key %}">
+                                <button id="gt-sprints" type="button" class="btn btn-secondary mt-4">Go To Sprint
+                                </button>
+                            </a>
+                            {% if role == 'admin' %}
+                                <br>
+                                <div>
+                                    <form id="delete-sprint-{{ key }}" class="form"
+                                          action="{% url 'delete-sprint' sprint=key project=request.resolver_match.kwargs.project %}"
+                                          method="post">
+                                        {% csrf_token %}
+                                        <input class="btn btn-danger mt-2 mx-2" type="submit" value="Delete Sprint">
+                                    </form>
                                 </div>
-
-                                <input type="hidden" name="user" class="form-control" value="{{ user }}" />
-                            </form>
+                            {% elif role == 'developer' %}
+                                <br>
+                                <div>
+                                    <form id="delete-sprint-{{ key }}" class="form"
+                                          action="{% url 'delete-sprint' sprint=key project=request.resolver_match.kwargs.project %}"
+                                          method="post">
+                                        {% csrf_token %}
+                                        <input class="btn btn-danger mt-2 mx-2" type="submit" value="Delete Sprint">
+                                    </form>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer bg-dark-gray">
-                    <button type="button" class="btn btn-secondary toggle-new-sprint"
-                        data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" form="new-sprint-form" value="Save Changes">
+            {% endfor %}
+        </div>
+
+        {% if role == 'developer' %}
+            <button type="button" class="btn btn-dark btn-lg toggle-new-sprint mt-4" data-toggle="modal"
+                    data-target="#new-sprint">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        {% elif role == 'admin' %}
+            <button type="button" class="btn btn-dark btn-lg toggle-new-sprint mt-4" data-toggle="modal"
+                    data-target="#new-sprint">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        {% endif %}
+
+        <div class="modal fade" id="new-sprint" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark-gray">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Create a Sprint</h5>
+                        <button type="button" class="close toggle-new-sprint" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="container modal-body bg-dark">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form id="new-sprint-form" class="form"
+                                      action="{% url 'new-sprint' request.resolver_match.kwargs.project %}"
+                                      method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <div class="m-3">
+                                            <label for="name" class="text-light">Sprint Name:</label><br>
+                                            <input type="text" name="name" id="name" class="form-control"
+                                                   placeholder="Awesome Sprint">
+                                        </div>
+
+                                        <div class="m-3">
+                                            <label for="date-starts" class="text-light">Starts At:</label><br>
+                                            <input type="date" name="date-starts" id="date-starts" class="form-control">
+                                        </div>
+
+                                        <div class="m-3">
+                                            <label for="date-ends" class="text-light">Ends At:</label><br>
+                                            <input type="date" name="date-ends" id="date-ends" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" name="user" class="form-control" value="{{ user }}"/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-dark-gray">
+                        <button type="button" class="btn btn-secondary toggle-new-sprint"
+                                data-dismiss="modal">Close
+                        </button>
+                        <input type="submit" class="btn btn-primary" form="new-sprint-form" value="Save Changes">
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
-    {% endblock content %}
+{% endblock content %}

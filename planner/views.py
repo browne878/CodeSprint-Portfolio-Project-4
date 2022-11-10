@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
-from .models import Company, Project, Sprint, Case, UserProfile
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+
+from .models import Company, Project, Sprint, Case, UserProfile
 
 
 @login_required
@@ -59,7 +60,6 @@ def edit_project(request, project):
             return redirect('projects')
 
 
-
 @login_required
 def delete_project(request, project):
     """
@@ -68,7 +68,6 @@ def delete_project(request, project):
     user_profile = UserProfile.objects.get(user_id=request.user)
     if user_profile.role == UserProfile.Role.ADMIN:
         if request.method == 'POST':
-            print('test')
             if Project.objects.filter(name=project):
                 Project.objects.get(name=project).delete()
 
@@ -119,6 +118,20 @@ def new_sprint(request, project):
             )
         )
     return redirect('sprints', project)
+
+
+@login_required
+def delete_sprint(request, sprint, project):
+    """
+    Deletes a sprint in the database and reloads the page
+    """
+    user_profile = UserProfile.objects.get(user_id=request.user)
+    if user_profile.role == UserProfile.Role.ADMIN:
+        if request.method == 'POST':
+            if Sprint.objects.filter(name=sprint):
+                Sprint.objects.get(name=sprint).delete()
+
+        return redirect('sprints', project)
 
 
 @login_required
