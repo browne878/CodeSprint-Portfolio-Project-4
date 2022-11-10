@@ -45,13 +45,14 @@
                             {% if role == 'admin' %}
                                 <br>
                                 <div>
-                                    <a class="text-light text-decoration-none" href="{% url 'edit-project' key %}">
-                                        <button id="edit-project" type="button" class="btn btn-secondary mt-2 mx-2">
-                                            Edit Project
-                                        </button>
-                                    </a>
+                                    <button type="button" class="btn btn-secondary toggle-edit-project mt-4"
+                                            data-toggle="modal"
+                                            data-target="#edit-project">
+                                        Edit Project
+                                    </button>
 
-                                    <form id="delete-project-{{ key }}" class="form" action="{% url 'delete-project' key %}"
+                                    <form id="delete-project-{{ key }}" class="form"
+                                          action="{% url 'delete-project' key %}"
                                           method="post">
                                         {% csrf_token %}
                                         <input class="btn btn-danger mt-2 mx-2" type="submit" value="Delete Project">
@@ -71,7 +72,6 @@
             </button>
         {% endif %}
 
-
         <div class="modal fade" id="new-project" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
              aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -85,7 +85,7 @@
                     <div class="container modal-body bg-dark">
                         <div class="row">
                             <div class="col-md-12">
-                                <form id="new-company-form" class="form" action="new-project" method="post">
+                                <form id="new-project-form" class="form" action="new-project" method="post">
                                     {% csrf_token %}
                                     <div class="form-group">
                                         <label for="name" class="text-light">Project Name:</label><br>
@@ -103,6 +103,41 @@
                                 data-dismiss="modal">Close
                         </button>
                         <input type="submit" class="btn btn-primary" form="new-company-form" value="Save Changes">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="edit-project" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark-gray">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit a Project</h5>
+                        <button type="button" class="close toggle-edit-project" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="container modal-body bg-dark">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form id="edit-project-form" class="form" action="edit-project" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="name" class="text-light">Project Name:</label><br>
+                                        <input type="text" name="name" id="name" class="form-control">
+                                    </div>
+
+                                    <input type="hidden" name="user" class="form-control" value="{{ user }}"/>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-dark-gray">
+                        <button type="button" class="btn btn-secondary toggle-edit-project"
+                                data-dismiss="modal">Close
+                        </button>
+                        <input type="submit" class="btn btn-primary" form="edit-project-form" value="Save Changes">
                     </div>
                 </div>
             </div>

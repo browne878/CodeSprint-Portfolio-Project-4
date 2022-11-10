@@ -50,7 +50,14 @@ def edit_project(request, project):
     """
     Edits a project in the database and reloads the page
     """
-    return redirect('projects')
+    user_profile = UserProfile.objects.get(user_id=request.user)
+    if user_profile.role == UserProfile.Role.ADMIN:
+        if request.method == 'POST':
+            name = request.POST.get('name')
+            Project.objects.filter(name=project).update(name=name)
+
+            return redirect('projects')
+
 
 
 @login_required

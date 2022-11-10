@@ -29,10 +29,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (window.location.href.split('/').includes('projects')) {
         const closeButtons = document.getElementsByClassName('toggle-new-project');
+        const editCloseButtons = document.getElementsByClassName('toggle-edit-project');
 
         for (const button of closeButtons) {
             button.addEventListener('click', () => {
                 $('#new-project').modal('toggle');
+            });
+        }
+
+        for (const button of editCloseButtons) {
+            button.addEventListener('click', () => {
+                $('#edit-project').modal('toggle');
             });
         }
     }
