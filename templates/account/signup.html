@@ -6,23 +6,26 @@
 
 {% block content %}
 
-<div id="register" class="container">
-    <div id="register-row" class="row vertical-center">
-        <div id="register-box" class="col-md-12">
-            <form class="form signup text-light text-center" id="signup_form" method="post" action="{% url 'account_signup' %}">
-                <h3 class="text-center text-light overflow-hidden">Sign Up</h3>
-                {% csrf_token %}
-                {{ form.as_p }}
-                {% if redirect_field_value %}
-                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                {% endif %}
-                <button type="submit" class="btn btn-dark m-3" id="btn-register">{% trans "Sign Up" %} &raquo;</button>
-                <div id="login-link" class="text-light">
-                    <p>{% blocktrans %}Already have an account?<br><a class="text-light" href="{{ login_url }}">Login Here</a>{% endblocktrans %}</p>
-                </div>
-            </form>
+    <div id="register" class="container">
+        <div id="register-row" class="row vertical-center">
+            <div id="register-box" class="col-md-12">
+                <form class="form signup text-light text-center" id="signup_form" method="post"
+                      action="{% url 'account_signup' %}">
+                    <h3 class="text-center text-light overflow-hidden">Sign Up</h3>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                    {% endif %}
+                    <button type="submit" class="btn btn-dark m-3" id="btn-register">{% trans "Sign Up" %} &raquo;
+                    </button>
+                    <div id="login-link" class="text-light">
+                        <p>{% blocktrans %}Already have an account?<br>
+                            <a class="text-light" href="{{ login_url }}">Login Here</a>{% endblocktrans %}</p>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
 {% endblock %}

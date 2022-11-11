@@ -145,7 +145,8 @@ def edit_sprint(request, project):
             ends_at = request.POST.get('date-ends')
             project_obj = Project.objects.get(name=project)
             sprint = request.POST.get('sprint')
-            Sprint.objects.filter(name=sprint, project=project_obj).update(name=name, starts_at=starts_at, ends_at=ends_at)
+            Sprint.objects.filter(name=sprint, project=project_obj).update(name=name, starts_at=starts_at,
+                                                                           ends_at=ends_at)
 
             return redirect('sprints', project)
 
@@ -178,7 +179,6 @@ def new_case(request, sprint):
 
 @login_required
 def edit_case(request, sprint, case):
-    print(request.method)
     if request.method == 'POST':
         found_case = Case.objects.get(case_id=case)
         found_case.title = request.POST.get('title')
@@ -192,7 +192,6 @@ def edit_case(request, sprint, case):
 
 @login_required
 def delete_case(request, sprint, case):
-    print(request.method)
     if request.method == 'POST':
         Case.objects.filter(case_id=case).delete()
     return redirect('cases', sprint)

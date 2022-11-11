@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic.base import RedirectView
 
 from planner import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', RedirectView.as_view(url='projects'), name='projects'),
     path('projects', views.projects, name='projects'),
     path('projects/edit/<str:project>', views.edit_project, name='edit-project'),
     path('projects/delete/<str:project>', views.delete_project, name='delete-project'),

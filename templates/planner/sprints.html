@@ -14,7 +14,7 @@
                         <button id="{{ key|cut:' ' }}"
                                 class="accordion-button collapsed bg-dark-gray no-border text-light"
                                 type="button" data-bs-toggle="collapse" data-bs-target="#{{ key|cut:' ' }}-collapse"
-                                aria-expanded="true" aria-controls="collapseOne">
+                                aria-expanded="true">
                             {{ key }}
                         </button>
                     </h2>
@@ -33,9 +33,8 @@
                                 {% endfor %}
                             {% endif %}
                             <br>
-                            <a class="text-light" href="{% url 'cases' key %}">
-                                <button id="gt-sprints" type="button" class="btn btn-secondary mt-4">Go To Sprint
-                                </button>
+                            <a class="text-light btn btn-secondary mt-4" id="gt-sprints" href="{% url 'cases' key %}">
+                                Go To Sprint
                             </a>
                             {% if role == 'admin' %}
                                 <br>
@@ -92,13 +91,11 @@
             </button>
         {% endif %}
 
-        <div class="modal fade" id="new-sprint" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalCenterTitle"
-             aria-hidden="true">
+        <div class="modal fade" id="new-sprint" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-dark-gray">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Create a Sprint</h5>
+                        <h5 class="modal-title">Create a Sprint</h5>
                         <button type="button" class="close toggle-new-sprint" data-dismiss="modal"
                                 aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -130,7 +127,7 @@
                                         </div>
                                     </div>
 
-                                    <input type="hidden" name="user" class="form-control" value="{{ user }}"/>
+                                    <input type="hidden" name="user" class="form-control" value="{{ user }}">
                                 </form>
                             </div>
                         </div>
@@ -145,13 +142,11 @@
             </div>
         </div>
 
-        <div class="modal fade" id="edit-sprint" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalCenterTitle"
-             aria-hidden="true">
+        <div class="modal fade" id="edit-sprint" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-dark-gray">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Edit a Sprint</h5>
+                        <h5 class="modal-title">Edit a Sprint</h5>
                         <button type="button" class="close toggle-edit-sprint" data-dismiss="modal"
                                 aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -166,24 +161,24 @@
                                     {% csrf_token %}
                                     <div class="form-group">
                                         <div class="m-3">
-                                            <label for="name" class="text-light">Sprint Name:</label><br>
-                                            <input type="text" name="name" id="name" class="form-control"
+                                            <label for="modal-name" class="text-light">Sprint Name:</label><br>
+                                            <input type="text" name="name" id="modal-name" class="form-control"
                                                    placeholder="Awesome Sprint">
                                         </div>
 
                                         <div class="m-3">
-                                            <label for="date-starts" class="text-light">Starts At:</label><br>
-                                            <input type="date" name="date-starts" id="date-starts"
+                                            <label for="modal-date-starts" class="text-light">Starts At:</label><br>
+                                            <input type="date" name="date-starts" id="modal-date-starts"
                                                    class="form-control">
                                         </div>
 
                                         <div class="m-3">
-                                            <label for="date-ends" class="text-light">Ends At:</label><br>
-                                            <input type="date" name="date-ends" id="date-ends" class="form-control">
+                                            <label for="modal-date-ends" class="text-light">Ends At:</label><br>
+                                            <input type="date" name="date-ends" id="modal-date-ends" class="form-control">
                                         </div>
                                     </div>
 
-                                    <input type="hidden" name="user" class="form-control" value="{{ user }}"/>
+                                    <input type="hidden" name="user" class="form-control" value="{{ user }}">
                                     <input id="sprint-name" type="hidden" name="sprint" value="">
                                 </form>
                             </div>

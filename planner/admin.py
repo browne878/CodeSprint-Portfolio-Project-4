@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import Company, UserProfile, Project, Sprint, Case
 
 admin.site.register(Company)

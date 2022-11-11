@@ -22,7 +22,7 @@
 
 /* Nav Bar */
 
-.top-margin  {
+.top-margin {
     margin-top: 30px;
 }
 
@@ -55,7 +55,7 @@ p {
 }
 
 @media screen and (min-width: 992px) {
-    .top-margin  {
+    .top-margin {
         margin-top: 0px;
     }
 }

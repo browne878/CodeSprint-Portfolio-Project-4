@@ -18,8 +18,7 @@
                         <button id="{{ key|cut:' ' }}"
                                 class="accordion-button collapsed bg-dark-gray no-border text-light" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#{{ key|cut:' ' }}-collapse"
-                                aria-expanded="true"
-                                aria-controls="collapseOne">
+                                aria-expanded="true">
                             {{ key }}
                         </button>
                     </h2>
@@ -72,12 +71,11 @@
             </button>
         {% endif %}
 
-        <div class="modal fade" id="new-project" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-             aria-hidden="true">
+        <div class="modal fade" id="new-project" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-dark-gray">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Create a Project</h5>
+                        <h5 class="modal-title" id="create-project-modal">Create a Project</h5>
                         <button type="button" class="close toggle-new-project" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -93,7 +91,7 @@
                                                placeholder="Awesome Project">
                                     </div>
 
-                                    <input type="hidden" name="user" class="form-control" value="{{ user }}"/>
+                                    <input type="hidden" name="user" class="form-control" value="{{ user }}">
                                 </form>
                             </div>
                         </div>
@@ -108,12 +106,11 @@
             </div>
         </div>
 
-        <div class="modal fade" id="edit-project" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-             aria-hidden="true">
+        <div class="modal fade" id="edit-project" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-dark-gray">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Edit a Project</h5>
+                        <h5 class="modal-title" id="edit-project-modal">Edit a Project</h5>
                         <button type="button" class="close toggle-edit-project" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -124,11 +121,11 @@
                                 <form id="edit-project-form" class="form" action="edit-project" method="post">
                                     {% csrf_token %}
                                     <div class="form-group">
-                                        <label for="name" class="text-light">Project Name:</label><br>
-                                        <input type="text" name="name" id="name" class="form-control">
+                                        <label for="modal-name" class="text-light">Project Name:</label><br>
+                                        <input type="text" name="name" id="modal-name" class="form-control">
                                     </div>
 
-                                    <input type="hidden" name="user" class="form-control" value="{{ user }}"/>
+                                    <input type="hidden" name="user" class="form-control" value="{{ user }}">
                                 </form>
                             </div>
                         </div>

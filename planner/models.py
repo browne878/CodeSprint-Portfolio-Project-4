@@ -1,7 +1,8 @@
-from django.db import models
 import uuid
-from django.utils.translation import gettext_lazy as _
+
 from django.contrib.auth.models import User
+from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Company(models.Model):
@@ -19,7 +20,6 @@ class Company(models.Model):
 
 
 class UserProfile(models.Model):
-
     class Role(models.TextChoices):
         CLIENT = 'client', _('CLIENT')
         DEVELOPER = 'developer', _('DEVELOPER')
@@ -68,7 +68,6 @@ class Sprint(models.Model):
 
 
 class Case(models.Model):
-
     class Status(models.TextChoices):
         PENDING = 'pending', _('PENDING')
         PLANNING = 'planning', _('PLANNING')
@@ -99,12 +98,12 @@ class Case(models.Model):
         choices=Status.choices,
         max_length=30,
         default=Status.PENDING
-        )
+    )
     category = models.CharField(
         choices=Category.choices,
         max_length=30,
         default=Category.FEATURE
-        )
+    )
     due_date = models.DateField(null=True)
     task_size = models.CharField(
         choices=Task_Size.choices,
