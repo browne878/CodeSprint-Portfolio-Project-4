@@ -93,7 +93,6 @@ def sprints(request, project):
             context['sprints'][sprint.name] = Case.objects.filter(
                 sprint=sprint
             )
-            print(context['sprints'][sprint.name])
         except Case.DoesNotExist:
             context['sprints'][sprint.name] = 'No Cases Found'
     return render(request, 'planner/sprints.html', context)
@@ -132,6 +131,23 @@ def delete_sprint(request, sprint, project):
                 Sprint.objects.get(name=sprint).delete()
 
         return redirect('sprints', project)
+
+
+def edit_sprint(request, project):
+    """
+    Edits a sprint in the database and reloads the page
+    """
+    user_profile = UserProfile.objects.get(user_id=request.user)
+    if user_profile.role == UserProfile.Role.ADMIN:
+        if request.method == 'POST':
+            name = request.POST.get('name')
+            starts_at = request.POST.get('date-starts')
+            ends_at = request.POST.get('date-ends')
+            project_obj = Project.objects.get(name=project)
+            sprint = request.POST.get('sprint')
+            Sprint.objects.filter(name=sprint, project=project_obj).update(name=name, starts_at=starts_at, ends_at=ends_at)
+
+            return redirect('sprints', project)
 
 
 @login_required

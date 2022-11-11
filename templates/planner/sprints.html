@@ -3,11 +3,8 @@
 {% block content %}
     <div class="container text-light text-center" id="project-page">
         <h3 class="p-4">Sprints</h3>
-        {% if projects|length == 0 %}
-            <p class="text-center">No sprints found</p>
-        {% endif %}
         <div class="accordion" id="accordionExample">
-            {% if sprints.count == 0 %}
+            {% if sprints|length == 0 %}
                 <p>There are no current sprints</p>
             {% endif %}
 
@@ -43,6 +40,14 @@
                             {% if role == 'admin' %}
                                 <br>
                                 <div>
+
+                                    <button type="button" class="btn btn-secondary toggle-edit-sprint mt-4"
+                                            data-toggle="modal"
+                                            data-target="#edit-sprint"
+                                            onclick="setSprint({{ key }})">
+                                        Edit Sprint
+                                    </button>
+
                                     <form id="delete-sprint-{{ key }}" class="form"
                                           action="{% url 'delete-sprint' sprint=key project=request.resolver_match.kwargs.project %}"
                                           method="post">
@@ -53,6 +58,14 @@
                             {% elif role == 'developer' %}
                                 <br>
                                 <div>
+
+                                    <button type="button" class="btn btn-secondary toggle-edit-sprint mt-4"
+                                            data-toggle="modal"
+                                            data-target="#edit-sprint"
+                                            onclick="setSprint({{ key }})">
+                                        Edit Sprint
+                                    </button>
+
                                     <form id="delete-sprint-{{ key }}" class="form"
                                           action="{% url 'delete-sprint' sprint=key project=request.resolver_match.kwargs.project %}"
                                           method="post">
@@ -79,13 +92,15 @@
             </button>
         {% endif %}
 
-        <div class="modal fade" id="new-sprint" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        <div class="modal fade" id="new-sprint" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle"
              aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-dark-gray">
                         <h5 class="modal-title" id="exampleModalLongTitle">Create a Sprint</h5>
-                        <button type="button" class="close toggle-new-sprint" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close toggle-new-sprint" data-dismiss="modal"
+                                aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -105,7 +120,8 @@
 
                                         <div class="m-3">
                                             <label for="date-starts" class="text-light">Starts At:</label><br>
-                                            <input type="date" name="date-starts" id="date-starts" class="form-control">
+                                            <input type="date" name="date-starts" id="date-starts"
+                                                   class="form-control">
                                         </div>
 
                                         <div class="m-3">
@@ -129,5 +145,58 @@
             </div>
         </div>
 
+        <div class="modal fade" id="edit-sprint" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalCenterTitle"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark-gray">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit a Sprint</h5>
+                        <button type="button" class="close toggle-edit-sprint" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="container modal-body bg-dark">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form id="edit-sprint-form" class="form"
+                                      action="{% url 'edit-sprint' request.resolver_match.kwargs.project %}"
+                                      method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <div class="m-3">
+                                            <label for="name" class="text-light">Sprint Name:</label><br>
+                                            <input type="text" name="name" id="name" class="form-control"
+                                                   placeholder="Awesome Sprint">
+                                        </div>
+
+                                        <div class="m-3">
+                                            <label for="date-starts" class="text-light">Starts At:</label><br>
+                                            <input type="date" name="date-starts" id="date-starts"
+                                                   class="form-control">
+                                        </div>
+
+                                        <div class="m-3">
+                                            <label for="date-ends" class="text-light">Ends At:</label><br>
+                                            <input type="date" name="date-ends" id="date-ends" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" name="user" class="form-control" value="{{ user }}"/>
+                                    <input id="sprint-name" type="hidden" name="sprint" value="">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-dark-gray">
+                        <button type="button" class="btn btn-secondary toggle-edit-sprint"
+                                data-dismiss="modal">Close
+                        </button>
+                        <input type="submit" class="btn btn-primary" form="edit-sprint-form" value="Save Changes">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock content %}

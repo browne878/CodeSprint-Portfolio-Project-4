@@ -10,6 +10,7 @@ urlpatterns = [
     path('projects/delete/<str:project>', views.delete_project, name='delete-project'),
     path('sprints/<str:project>', views.sprints, name='sprints'),
     path('sprints/delete/<str:sprint>/<str:project>', views.delete_sprint, name='delete-sprint'),
+    path('sprints/edit/<str:project>', views.edit_sprint, name='edit-sprint'),
     path('cases/<str:sprint>', views.cases, name='cases'),
     path('accounts/', include('allauth.urls')),
     path('new-profile', views.new_profile, name='profile'),

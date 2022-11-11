@@ -9,87 +9,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Agile sprint planner for software development projects">
     <meta name="keywords" content="agile, software development, coding, planner, sprint">
-    
+
     <script>
         var user = '{{ user }}';
         var role = '{{ role }}';
+
+        function setSprint(name) {
+            $('#sprint-name').val(name.id);
+            console.log($('#sprint-name').val());
+        }
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
-        integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+          integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <title>CodeSprint</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-dark">
-        <div class="container-fluid">
-            <a class="text-light navbar-brand" href="#">CodeSprint</a>
-            <button class="bg-light navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"
+<nav class="navbar navbar-expand-lg bg-dark">
+    <div class="container-fluid">
+        <a class="text-light navbar-brand" href="#">CodeSprint</a>
+        <button class="bg-light navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"
                 aria-controls="Navbar" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="nav">
-                <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
-                    {% if user.is_authenticated %}
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+            <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+                {% if user.is_authenticated %}
                     <li class="nav-item ms-auto me-3 top-margin">
                         <a class="text-light nav-link" href="{% url 'projects' %}">Projects</a>
                     </li>
                     <li class="nav-item  ms-auto me-3">
                         <a class="text-light nav-link" href="{% url 'account_logout' %}">Logout</a>
                     </li>
-                    {% else %}
+                {% else %}
                     <li class="nav-item  ms-auto me-3">
                         <a class="text-light nav-link" href="{{ signup_url }}">Register</a>
                     </li>
                     <li class="nav-item  ms-auto me-3">
                         <a class="text-light nav-link" href="{{ login_url }}">Login</a>
                     </li>
-                    {% endif %}
-                </ul>
-            </div>
+                {% endif %}
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <main class="bg-secondary">
-        <div class="container-fluid content align-middle">
-            {% block content %}
-            {% endblock content %}
-        </div>
-    </main>
+<main class="bg-secondary">
+    <div class="container-fluid content align-middle">
+        {% block content %}
+        {% endblock content %}
+    </div>
+</main>
 
-    <footer class="footer mt-auto py-3 bg-dark text-light text-center fixed-bottom">
-        <ul class="nav sticky-bottom justify-content-center">
-            <li class="nav-item">
-                <a class="text-light nav-link" href="https://www.facebook.com/" target="_blank" rel="noopener"><i
-                        class="fa-brands fa-facebook"></i></a>
-            </li>
-            <li class="nav-item">
-                <a class="text-light nav-link" href="https://twitter.com/?lang=en" target="_blank" rel="noopener"><i
-                        class="fa-brands fa-twitter"></i></a>
-            </li>
-            <li class="nav-item">
-                <a class="text-light nav-link" href="https://www.linkedin.com/" target="_blank" rel="noopener"><i
-                        class="fa-brands fa-linkedin-in"></i></a>
-            </li>
-            <li class="nav-item">
-                <a class="text-light nav-link" href="https://www.instagram.com/?hl=en" target="_blank" rel="noopener"><i
-                        class="fa-brands fa-instagram"></i></a>
-            </li>
-        </ul>
-        <p id="text-light copyright"><i class="far fa-copyright nav-item" target="_blank" rel="noopener"></i> Copyright
-            Aaron Browne <span id="copyright-date"></span></p>
-    </footer>
+<footer class="footer mt-auto py-3 bg-dark text-light text-center fixed-bottom">
+    <ul class="nav sticky-bottom justify-content-center">
+        <li class="nav-item">
+            <a class="text-light nav-link" href="https://www.facebook.com/" target="_blank" rel="noopener"><i
+                    class="fa-brands fa-facebook"></i></a>
+        </li>
+        <li class="nav-item">
+            <a class="text-light nav-link" href="https://twitter.com/?lang=en" target="_blank" rel="noopener"><i
+                    class="fa-brands fa-twitter"></i></a>
+        </li>
+        <li class="nav-item">
+            <a class="text-light nav-link" href="https://www.linkedin.com/" target="_blank" rel="noopener"><i
+                    class="fa-brands fa-linkedin-in"></i></a>
+        </li>
+        <li class="nav-item">
+            <a class="text-light nav-link" href="https://www.instagram.com/?hl=en" target="_blank" rel="noopener"><i
+                    class="fa-brands fa-instagram"></i></a>
+        </li>
+    </ul>
+    <p id="text-light copyright"><i class="far fa-copyright nav-item" target="_blank" rel="noopener"></i> Copyright
+        Aaron Browne <span id="copyright-date"></span></p>
+</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
-    </script>
-    <script src="{% static 'js/script.js'%}"></script>
+</script>
+<script src="{% static 'js/script.js' %}"></script>
 </body>
 
 </html>

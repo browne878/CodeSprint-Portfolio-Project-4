@@ -45,11 +45,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (window.location.href.split('/').includes('sprints')) {
+        console.log('test')
         const closeButtons = document.getElementsByClassName('toggle-new-sprint');
+        const editCloseButtons = document.getElementsByClassName('toggle-edit-sprint');
 
         for (const button of closeButtons) {
             button.addEventListener('click', () => {
                 $('#new-sprint').modal('toggle');
+            });
+        }
+
+        for (const button of editCloseButtons) {
+            button.addEventListener('click', () => {
+                $('#edit-sprint').modal('toggle');
             });
         }
     }
