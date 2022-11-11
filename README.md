@@ -39,7 +39,7 @@ on a project.
 I wanted to create a new tool to help during my development process. This app was made with what I learnt from using
 other applications and tools to manage my projects progress.
 
-The wireframes for all pages can be found [here]().
+The wireframes for all pages can be found [here](https://github.com/browne878/CodeSprint-Portfolio-Project-4/tree/main/readme/images/screen-designs).
 
 I tried to keep the designs very simple as this application is meant to be hosted internally and not be used by the
 public.
@@ -68,7 +68,7 @@ can see the model design below.
 ## **Testing**
 
 To test this project, I ran my code through JSHint checker, W3C Markup Validation Service and the W3C CSS validation
-Service. The results of which can be found [here]().
+Service. The results of which can be found [here](https://github.com/browne878/CodeSprint-Portfolio-Project-4/tree/main/readme/images).
 
 I used Django's built-in testing to develop tests to check the Login and Register views.
 
