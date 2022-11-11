@@ -55,6 +55,7 @@ def edit_project(request):
     if user_profile.role == UserProfile.Role.ADMIN:
         if request.method == 'POST':
             project = request.POST.get('project')
+            print(project)
             name = request.POST.get('name')
             Project.objects.filter(name=project).update(name=name)
 
