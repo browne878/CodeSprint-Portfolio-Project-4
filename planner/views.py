@@ -47,13 +47,14 @@ def new_project(request):
 
 
 @login_required
-def edit_project(request, project):
+def edit_project(request):
     """
     Edits a project in the database and reloads the page
     """
     user_profile = UserProfile.objects.get(user_id=request.user)
     if user_profile.role == UserProfile.Role.ADMIN:
         if request.method == 'POST':
+            project = request.POST.get('project')
             name = request.POST.get('name')
             Project.objects.filter(name=project).update(name=name)
 

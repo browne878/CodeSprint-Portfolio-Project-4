@@ -46,7 +46,8 @@
                                 <div>
                                     <button type="button" class="btn btn-secondary toggle-edit-project mt-4"
                                             data-toggle="modal"
-                                            data-target="#edit-project">
+                                            data-target="#edit-project"
+                                            onclick="setProject({{ key }})">
                                         Edit Project
                                     </button>
 
@@ -118,7 +119,8 @@
                     <div class="container modal-body bg-dark">
                         <div class="row">
                             <div class="col-md-12">
-                                <form id="edit-project-form" class="form" action="edit-project" method="post">
+                                <form id="edit-project-form" class="form" action="{% url 'edit-project' %}"
+                                      method="post">
                                     {% csrf_token %}
                                     <div class="form-group">
                                         <label for="modal-name" class="text-light">Project Name:</label><br>
@@ -126,6 +128,7 @@
                                     </div>
 
                                     <input type="hidden" name="user" class="form-control" value="{{ user }}">
+                                    <input type="hidden" name="project-name" value="">
                                 </form>
                             </div>
                         </div>

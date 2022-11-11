@@ -8,7 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url='projects'), name='projects'),
     path('projects', views.projects, name='projects'),
-    path('projects/edit/<str:project>', views.edit_project, name='edit-project'),
+    path('projects/edit/', views.edit_project, name='edit-project'),
     path('projects/delete/<str:project>', views.delete_project, name='delete-project'),
     path('sprints/<str:project>', views.sprints, name='sprints'),
     path('sprints/delete/<str:sprint>/<str:project>', views.delete_sprint, name='delete-sprint'),
