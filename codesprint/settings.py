@@ -35,7 +35,7 @@ if 'DEVELOPMENT' in os.environ:
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = ["pp4-codesprint.herokuapp.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["pp4-codesprint.herokuapp.com", "localhost", "127.0.0.1", "codesprint.herokuapp.com"]
 
 # Application definition
 
